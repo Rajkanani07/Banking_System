@@ -13,7 +13,7 @@ class User(BaseModel) :
     user_id = models.AutoField(primary_key=True)
     last_name = models.CharField(max_length=13)
     frist_name = models.CharField(max_length=13)
-    username = models.CharField(unique=True,db_index=True)
+    username = models.CharField(unique=True,db_index=True,max_length=36)
     gender = models.CharField(
         max_length=1, choices=(("m", "Male"), ("f", "Female")), null=False
     )

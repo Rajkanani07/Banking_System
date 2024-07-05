@@ -17,7 +17,7 @@ from .models import User
 # Create your views here.
 class UserListApiview(APIView):
 
-    Permission_classes =  [permissions.Allowany]
+    Permission_classes =  [permissions.AllowAny]
 
     def submit_user_form (
             request,
@@ -31,3 +31,22 @@ class UserListApiview(APIView):
                 last_name = request.POST.get("last_name")
                 username = request.POST.get("username")
                 email = request.POST.get("email")
+    
+    def home(request):
+        message = "Welcome to my Django project!"
+        return render(request, 'home.html', {'message': message})
+    
+
+    def user_login(request):
+        if request.method == "POST":
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')  # Redirect to a home page after successful login
+            else:
+                messages.error(request, 'Invalid username or password')
+        return render(request, 'login.html')
+    
+    
